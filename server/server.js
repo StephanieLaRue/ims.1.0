@@ -7,9 +7,9 @@ const path = require("path")
 const port = 3500;
 // const queries = require("./database/dbqueries.js")
 
-let server = http.createServer(function(req, res) {
+http.createServer(function(req, res) {
     let uri = url.parse(req.url).pathname
-    let pathname = path.join(process.cwd(), uri);
+    let pathname = path.join(__dirname+"/../public", uri);
 
     const extmap = {
         '.ico': 'image/x-icon',
@@ -44,6 +44,7 @@ let server = http.createServer(function(req, res) {
 
     else {
         if (uri == '/') { pathname += '/public/index.html'; }
+        
         let exists = fs.existsSync(pathname)
 
         if(!exists) {
