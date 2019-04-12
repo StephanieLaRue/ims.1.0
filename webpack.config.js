@@ -6,7 +6,7 @@ const path = require('path');
 
 module.exports = {
     entry: {
-        app: ['./source/interface.jsx']
+        app: ['./source/main.jsx']
     },
     output: {
         filename: 'assets/[name]-bundle.js',

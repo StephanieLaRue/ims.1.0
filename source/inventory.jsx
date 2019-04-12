@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import './index.scss';
 
 
@@ -8,7 +7,7 @@ import 'flatpickr/dist/themes/material_blue.css'
 import Flatpickr from 'react-flatpickr'
 
 
-class ProductInput extends React.Component {
+class Inventory extends React.Component {
 
 	constructor() {
 		super();
@@ -26,8 +25,11 @@ class ProductInput extends React.Component {
 			<div>
 				<div id="full-sidebar">
 					<h4>Inventory Entry</h4>
-					<div id="sidebar-container">
+					<div id="top-sidebar-container">
 						<Flatpickr className="calendar" options={{altInput: true, altFormat: "F j, Y", dateFormat: "Y-m-d"}} value={date} onChange={date => { this.setState({date}) }} />
+						<input className="product-cost" placeholder="Cost"/>
+					</div>
+					<div id="sidebar-container">
 						<input className="product-desc" type="text" placeholder="Product Description" />
 					</div>
 
@@ -138,5 +140,4 @@ class ProductInput extends React.Component {
 	}
 }
 
-ReactDOM.render( <ProductInput />, document.getElementById('inventoryInput') );
-
+module.exports = Inventory;
