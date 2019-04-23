@@ -1,4 +1,5 @@
 {
-    "user": "dockerapp",
-    "database": "dockerdb"
+    "user": "testinvuser",
+    "database": "inventoryapp",
+    "password": "password"
 }

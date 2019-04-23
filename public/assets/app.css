@@ -1,3 +1,8 @@
+#allcomponent-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px; }
+
 #full-sidebar {
   background-color: #e9e8e8;
   width: 350px;
@@ -42,6 +47,38 @@
     margin-bottom: 20px; }
     #full-sidebar #sidebar-dropdowns .dropdown-list {
       margin: 5px auto; }
+
+#list {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 40px;
+  justify-content: space-between; }
+  #list #header-text {
+    text-align: center;
+    flex: 1 100%;
+    font-size: 30px;
+    background-color: #e9e8e8;
+    margin-bottom: 10px;
+    padding: 5px;
+    font-family: Arial;
+    color: #424141; }
+  #list .list-item {
+    flex-direction: row;
+    border: 1px solid #424141;
+    border-radius: 3px;
+    margin: 8px; }
+    #list .list-item .list-item-text {
+      color: #424141;
+      font-family: Arial;
+      text-align: center;
+      background-color: #e9e8e8;
+      padding: 10px; }
+    #list .list-item .table-headers {
+      background-color: #a60cb4;
+      color: white;
+      text-align: left; }
+    #list .list-item .table-data, #list .list-item .table-headers {
+      padding: 5px; }
 
 @media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (-webkit-min-device-pixel-ratio: 2) {
   body {

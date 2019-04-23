@@ -4,8 +4,8 @@ const http = require("http")
 const fs = require("fs")
 const url = require("url")
 const path = require("path")
-const port = 3500;
-// const queries = require("./database/dbqueries.js")
+const port = 3600;
+const queries = require("../database/queries.js")
 
 http.createServer(function(req, res) {
     let uri = url.parse(req.url).pathname
@@ -23,22 +23,33 @@ http.createServer(function(req, res) {
         '.doc': 'application/msword'
     };
 
-    if(req.url.match('/database/userinput') && req.method == "POST") {
-        let userdata = ""
+    if(req.url.match('/add-new-item') && req.method == "POST") {
+        console.log("Adding new item test");
+        let data = ""
         req.on('error', (err) => { consol.error(err) })
-        req.on('data', (buffer) => { userdata += buffer.toString() })
+        req.on('data', (buffer) => { data += buffer.toString(); console.log(data); })
         req.on('end', () => {
-            let parsedInput = userdata ? JSON.parse(userdata) : ""
-            queries.addData(parsedInput, () => { 
-                res.end()    
-            })
-        });
+            try {
+                let parsedInput = data ? JSON.parse(data) : ""
+                queries.addData(parsedInput, () => { res.end() })
+            } 
+            catch(err) {
+                console.error(err.message)
+            }
 
+        });
     }
-    else if(req.url.match('/database/getAllData') && req.method == "GET") {
-        req.on('error', (err) => { consol.error(err) })
+    else if(req.url.match('/view-inventory') && req.method == "GET") {
+        req.on('error', (err) => { console.error(err) })
+        let data = "";
+        req.on('data', (chunk) => { data += chunk})
         req.on('end', () => {
-            queries.showAll( () => { res.end() })
+            try {
+                queries.showAll(data, (err, result) => { res.end(result); console.log("got it: ", result); })
+              } 
+              catch (err) {
+                console.error(err.message);
+              }
         });
     }
 

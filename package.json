@@ -4,7 +4,8 @@
   "description": "inventory app",
   "dependencies": {
     "jquery": "^3.3.1",
-    "node": "^10.6.0"
+    "node": "^10.6.0",
+    "pg": "^7.10.0"
   },
   "main": "webpack.config.js",
   "scripts": {
