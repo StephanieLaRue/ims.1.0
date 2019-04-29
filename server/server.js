@@ -4,7 +4,7 @@ const http = require("http")
 const fs = require("fs")
 const url = require("url")
 const path = require("path")
-const port = 3600;
+const port = 3500;
 const queries = require("../database/queries.js")
 
 http.createServer(function(req, res) {
@@ -27,7 +27,7 @@ http.createServer(function(req, res) {
         console.log("Adding new item test");
         let data = ""
         req.on('error', (err) => { consol.error(err) })
-        req.on('data', (buffer) => { data += buffer.toString(); console.log(data); })
+        req.on('data', (buffer) => { data += buffer.toString() })
         req.on('end', () => {
             try {
                 let parsedInput = data ? JSON.parse(data) : ""
@@ -45,7 +45,7 @@ http.createServer(function(req, res) {
         req.on('data', (chunk) => { data += chunk})
         req.on('end', () => {
             try {
-                queries.showAll(data, (err, result) => { res.end(result); console.log("got it: ", result); })
+                queries.showAll(data, (err, result) => { res.end(result) })
               } 
               catch (err) {
                 console.error(err.message);

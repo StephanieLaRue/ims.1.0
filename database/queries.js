@@ -1,5 +1,5 @@
 const pg = require("pg")
-const insertNewData = "INSERT INTO userdata(userinput) values($1)";
+const insertNewData = "INSERT INTO userdata(date, description, brand, cost, style, size, color, pattern) values($1, $2, $3, $4, $5, $6, $7, $8)";
 const creds = require("../config.json")
 
 let config = {
@@ -16,8 +16,9 @@ let pool = new pg.Pool(config)
 module.exports = {
     
     addData: function(parsedInput) {
-        let newData = parsedInput
 
+        let values = [parsedInput.date, parsedInput.description, parsedInput.brand, parsedInput.cost, parsedInput.style, parsedInput.size, parsedInput.color, parsedInput.pattern]
+        
         pool.on('error', (err) => {
             console.error('Idle Client...', err)
             process.exit(1)
@@ -28,11 +29,8 @@ module.exports = {
                 console.log('Connection Error in "addData"... ' + err) 
                 return
             }
-            client.query('CREATE TABLE IF NOT EXISTS userdata(userinput text)', function (err) {
-                // done()
-                if (err) throw new Error(err);
-            })
-            client.query(insertNewData, [newData], function (err, result) {
+            
+            client.query(insertNewData, values, function (err, result) {
                 console.log("added query ", result);
                 
                 done()
@@ -53,8 +51,7 @@ module.exports = {
                 callback(err)
             }
             client.query('SELECT * FROM userdata', function (err, result) {
-                console.log("got it");
-                
+
                 done()
                 if(err) callback(err)
                 let json = JSON.stringify(result)
