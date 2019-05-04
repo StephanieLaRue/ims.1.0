@@ -67,12 +67,21 @@
     border: 1px solid #424141;
     border-radius: 3px;
     margin: 8px; }
-    #list .list-item .list-item-text {
-      color: #424141;
-      font-family: Arial;
-      text-align: center;
+    #list .list-item .header-row {
       background-color: #e9e8e8;
       padding: 10px; }
+      #list .list-item .header-row #soldBtn {
+        border: solid 2px #424141;
+        float: right;
+        padding: 10px;
+        cursor: pointer;
+        border-radius: 3px; }
+      #list .list-item .header-row .list-item-text {
+        color: #424141;
+        font-family: Arial;
+        text-align: center;
+        padding: 10px;
+        display: inline; }
     #list .list-item .table-headers {
       background-color: #a60cb4;
       color: white;

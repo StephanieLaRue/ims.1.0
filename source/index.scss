@@ -100,12 +100,28 @@
         border-radius: 3px;
         margin: 8px;
 
-        .list-item-text {
-            color: rgb(66, 65, 65);
-            font-family: Arial;
-            text-align: center;
+        .header-row {
             background-color: rgb(233, 232, 232);
             padding: 10px;
+
+            #soldBtn {
+                border: solid 2px rgb(66, 65, 65);
+                // width: 20px;
+                // height: 20px;
+                float: right;
+                padding: 10px;
+                // display: inline;
+                cursor: pointer;
+                border-radius: 3px;
+            }
+
+            .list-item-text {
+                color: rgb(66, 65, 65);
+                font-family: Arial;
+                text-align: center;
+                padding: 10px;
+                display: inline;
+            }
         }
 
         .table-headers {
