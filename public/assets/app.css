@@ -70,12 +70,14 @@
     #list .list-item .header-row {
       background-color: #e9e8e8;
       padding: 10px; }
-      #list .list-item .header-row #soldBtn {
+      #list .list-item .header-row .soldBtn, #list .list-item .header-row .removeBtn {
         border: solid 2px #424141;
         float: right;
         padding: 10px;
         cursor: pointer;
         border-radius: 3px; }
+      #list .list-item .header-row .removeBtn {
+        border: solid 2px #a31717; }
       #list .list-item .header-row .list-item-text {
         color: #424141;
         font-family: Arial;

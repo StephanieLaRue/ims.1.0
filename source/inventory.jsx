@@ -15,7 +15,7 @@ class Inventory extends React.Component {
             rawInventory: [],
             cleanInventory: [],
             // soldItem: "red",
-            soldStatus: false
+            soldStatus: false,
         };
         
         this.viewInventory = this.viewInventory.bind(this)
@@ -27,14 +27,13 @@ class Inventory extends React.Component {
         this.getInventory()
     }
 
-    handleSoldClick() {
+    handleSoldClick(e) {
+
         this.setState({
             soldStatus: this.state.soldStatus = true
         });
 
-        console.log(this.state.soldStatus);
-
-        let sold = { soldStatus: this.state.soldStatus }
+        let sold = { soldStatus: this.state.soldStatus, id: e.target.id }
         
         let params = {
             method: 'POST',
@@ -45,17 +44,42 @@ class Inventory extends React.Component {
             body: JSON.stringify(sold)
           }
           fetch(`${location.origin}/sold-item/status`, params)
-        //   .then(res => res.json())
-        //   .then((data) => {
+          .then(res => res.json())
+          .then((data) => {
+              console.log(data);
+              return
             // this.setState({rawInventory: data.rows}, () => {
             //   this.viewInventory(this.state.rawInventory)
             // })  
-        //   })
-        //   .catch(error => console.error('Error GETTING Data:', error))
+          })
+          .catch(error => console.error('Error GETTING Data:', error))
+      }
+
+      handleRemoveItem(e) {
+
+        let removeItemID = { id: e.target.id }
+        
+        let params = {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(removeItemID)
+          }
+          fetch(`${location.origin}/remove-listing`, params)
+          .then(res => res.json())
+          .then((data) => {
+              console.log(data);
+              return
+            // this.setState({rawInventory: data.rows}, () => {
+            //   this.viewInventory(this.state.rawInventory)
+            // })  
+          })
+          .catch(error => console.error('Error GETTING Data:', error))
       }
 
     
-
     getInventory() {
         let params = {
             method: 'GET',
@@ -80,14 +104,16 @@ class Inventory extends React.Component {
         
         let inventory = data.map((item, ind) => {
 
-            let soldBtn = <div id="soldBtn" onClick={this.handleSoldClick} style={{backgroundColor: this.state.soldItem}}> </div>
+            let soldBtn = <div className="soldBtn" id={item.id} onClick={this.handleSoldClick} style={{backgroundColor: this.state.soldItem}}> </div>
+            let removeBtn = <div className="removeBtn" id={item.id} onClick={this.handleRemoveItem} > </div>
 
             return (
 
                     <tr className="list-item">
                         <th className="header-row" colspan="100">
-                            <div className="list-item-text" >Item: 1234</div>
+                            <div className="list-item-text" >Item: {item.id}</div>
                             {soldBtn}
+                            {removeBtn}
                         </th>
                         
                         <tr className="data-row">

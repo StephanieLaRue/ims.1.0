@@ -47,7 +47,23 @@ http.createServer(function(req, res) {
         req.on('end', () => {
             try {
                 let parsedInput = data ? JSON.parse(data) : ""
-                queries.addSoldStatus(parsedInput, () => { res.end() })
+                queries.soldStatus(parsedInput, (err, result) => { res.end(result) })
+            } 
+            catch(err) {
+                console.error(err.message)
+            }
+
+        });
+    }
+    else if(req.url.match('/remove-listing') && req.method == "POST") {
+        console.log("Adding sold status");
+        let data = ""
+        req.on('error', (err) => { consol.error(err) })
+        req.on('data', (buffer) => { data += buffer.toString() })
+        req.on('end', () => {
+            try {
+                let parsedInput = data ? JSON.parse(data) : ""
+                queries.removeListing(parsedInput, (err, result) => { res.end(result) })
             } 
             catch(err) {
                 console.error(err.message)
