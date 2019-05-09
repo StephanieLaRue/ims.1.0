@@ -105,18 +105,25 @@
             padding: 10px;
 
             .soldBtn, .removeBtn {
-                border: solid 2px rgb(66, 65, 65);
+                // border: solid 2px rgb(66, 65, 65);
                 // width: 20px;
                 // height: 20px;
-                float: right;
+                float: left;
                 padding: 10px;
                 // display: inline;
                 cursor: pointer;
                 border-radius: 3px;
+                border:none;
             }
 
             .removeBtn {
-                border: solid 2px rgb(163, 23, 23);
+                // border: solid 2px rgb(163, 23, 23);
+                float: right;
+            }
+
+            .removeBtn:hover {
+                background-color: rgb(228, 17, 17);
+                color: white;
             }
 
             .list-item-text {

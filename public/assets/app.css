@@ -71,13 +71,16 @@
       background-color: #e9e8e8;
       padding: 10px; }
       #list .list-item .header-row .soldBtn, #list .list-item .header-row .removeBtn {
-        border: solid 2px #424141;
-        float: right;
+        float: left;
         padding: 10px;
         cursor: pointer;
-        border-radius: 3px; }
+        border-radius: 3px;
+        border: none; }
       #list .list-item .header-row .removeBtn {
-        border: solid 2px #a31717; }
+        float: right; }
+      #list .list-item .header-row .removeBtn:hover {
+        background-color: #e41111;
+        color: white; }
       #list .list-item .header-row .list-item-text {
         color: #424141;
         font-family: Arial;

@@ -49,6 +49,9 @@ class Sidebar extends React.Component {
 			color: this.state.color
 		}
 
+		console.log(newItem.date);
+		
+
 		this.userRegistration(newItem)
 
 	  }

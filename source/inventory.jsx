@@ -3,20 +3,8 @@ import './index.scss';
 
 //Calendar
 import 'flatpickr/dist/themes/material_blue.css'
-
-// function SoldColor (props) {
-//     let itemHasSold = props.itemHasSold;
-
-//     if(itemHasSold) {
-
-//         return <div style={{backgroundColor: "green"}} ></div>
-//     }
-//     else {
-//         console.log("did not sell");
-//         return false
-//     }
-
-// }
+import Moment from 'react-moment';
+import 'moment-timezone';
 
 class Inventory extends React.Component {
 
@@ -27,7 +15,6 @@ class Inventory extends React.Component {
             date: new Date(),
             rawInventory: [],
             cleanInventory: [],
-            soldItem: "red",
             soldStatus: false,
         };
         
@@ -69,6 +56,8 @@ class Inventory extends React.Component {
       }
 
       handleRemoveItem(e) {
+
+        if(!window.confirm("Are you sure you want to delete this item?")) { return }
 
         let removeItemID = { id: e.target.id }
         
@@ -141,22 +130,17 @@ class Inventory extends React.Component {
         
         let inventory = data.map((item, ind) => {
 
-            let soldBtn = <div className="soldBtn" id={item.id} onClick={this.handleSoldClick} > </div>
-            let removeBtn = <div className="removeBtn" id={item.id} onClick={this.handleRemoveItem} > </div>
-            
             return (
 
                     <tr className="list-item">
                         <th className="header-row" colspan="100">
+                            <button className="soldBtn" id={item.id} onClick={this.handleSoldClick} style={{ backgroundColor: item.sold ? "green" : "" }} >{item.sold ? "Sold" : "Unsold"}</button>
                             <div className="list-item-text" >Item: {item.id}</div>
-                            <div className="soldBtn" style={{ backgroundColor: item.sold ? "red" : "green" }} />
-                            {soldBtn}
-                            {removeBtn}
-                        </th>
+                            <button className="removeBtn" id={item.id} onClick={this.handleRemoveItem} >X</button>                        </th>
                         
                         <tr className="data-row">
                             <th className="table-headers">Date</th>
-                            <td className="table-data">{item.date}</td>
+                            <Moment><td className="table-data">{item.date}</td></Moment>
                         </tr>
                         <tr className="data-row">                                                        
                             <th className="table-headers">Description</th>
