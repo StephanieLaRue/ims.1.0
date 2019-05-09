@@ -1,6 +1,6 @@
 const pg = require("pg")
 const insertNewData = "INSERT INTO userdata(date, description, brand, cost, style, size, color, pattern) values($1, $2, $3, $4, $5, $6, $7, $8)";
-const insertSoldData = "UPDATE userdata SET sold = $1 WHERE id = $2";
+const insertSoldData = "UPDATE userdata SET sold = $1 WHERE id = $2 RETURNING sold";
 const removeListing = "DELETE FROM userdata WHERE id = $1";
 const creds = require("../config.json")
 
@@ -79,7 +79,31 @@ module.exports = {
             }
            
             client.query(insertSoldData, values, function (err, result) {
-                console.log("added sold query ", result);
+
+                done()
+                if(err) callback(err)
+                let json = JSON.stringify(result.rows[0])
+                callback(null, json)
+            })
+        })
+    },
+    removeListing: function(parsedInput, callback) {
+
+        let values = [parsedInput.id]
+
+        pool.on('error', (err) => {
+            console.error('Idle Client...', err)
+            process.exit(1)
+        })
+
+        pool.connect((err, client, done) => {
+            if(err) { 
+                console.log('Connection Error in "addstatus"... ' + err) 
+                return
+            }
+           
+            client.query(removeListing, values, function (err, result) {
+                console.log("remove query ", result);
                 
                 done()
                 if(err) callback(err)
@@ -88,7 +112,7 @@ module.exports = {
             })
         })
     },
-    removeListing: function(parsedInput, callback) {
+    updateListing: function(parsedInput, callback) {
 
         let values = [parsedInput.id]
 

@@ -4,6 +4,19 @@ import './index.scss';
 //Calendar
 import 'flatpickr/dist/themes/material_blue.css'
 
+// function SoldColor (props) {
+//     let itemHasSold = props.itemHasSold;
+
+//     if(itemHasSold) {
+
+//         return <div style={{backgroundColor: "green"}} ></div>
+//     }
+//     else {
+//         console.log("did not sell");
+//         return false
+//     }
+
+// }
 
 class Inventory extends React.Component {
 
@@ -14,7 +27,7 @@ class Inventory extends React.Component {
             date: new Date(),
             rawInventory: [],
             cleanInventory: [],
-            // soldItem: "red",
+            soldItem: "red",
             soldStatus: false,
         };
         
@@ -26,6 +39,8 @@ class Inventory extends React.Component {
     componentDidMount() {
         this.getInventory()
     }
+
+
 
     handleSoldClick(e) {
 
@@ -46,11 +61,9 @@ class Inventory extends React.Component {
           fetch(`${location.origin}/sold-item/status`, params)
           .then(res => res.json())
           .then((data) => {
-              console.log(data);
-              return
-            // this.setState({rawInventory: data.rows}, () => {
-            //   this.viewInventory(this.state.rawInventory)
-            // })  
+            this.setState({soldStatus: data.sold}, () => {
+                this.getInventory()
+            })  
           })
           .catch(error => console.error('Error GETTING Data:', error))
       }
@@ -60,7 +73,7 @@ class Inventory extends React.Component {
         let removeItemID = { id: e.target.id }
         
         let params = {
-            method: 'POST',
+            method: 'DELETE',
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json'
@@ -68,6 +81,30 @@ class Inventory extends React.Component {
             body: JSON.stringify(removeItemID)
           }
           fetch(`${location.origin}/remove-listing`, params)
+          .then(res => res.json())
+          .then((data) => {
+              console.log("r data", data);
+              return
+            // this.setState({rawInventory: data.rows}, () => {
+            //   this.viewInventory(this.state.rawInventory)
+            // })  
+          })
+          .catch(error => console.error('Error GETTING Data:', error))
+      }
+
+      handleUpdateItem(e) {
+
+        let updateItemID = { id: e.target.id }
+        
+        let params = {
+            method: 'PUT',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(removeItemID)
+          }
+          fetch(`${location.origin}/update-listing/` + updateItemID, params)
           .then(res => res.json())
           .then((data) => {
               console.log(data);
@@ -94,7 +131,7 @@ class Inventory extends React.Component {
               console.log(data.rows);
               
             this.setState({rawInventory: data.rows}, () => {
-              this.viewInventory(this.state.rawInventory)
+                this.viewInventory(this.state.rawInventory)
             })  
           })
           .catch(error => console.error('Error GETTING Data:', error))
@@ -104,14 +141,15 @@ class Inventory extends React.Component {
         
         let inventory = data.map((item, ind) => {
 
-            let soldBtn = <div className="soldBtn" id={item.id} onClick={this.handleSoldClick} style={{backgroundColor: this.state.soldItem}}> </div>
+            let soldBtn = <div className="soldBtn" id={item.id} onClick={this.handleSoldClick} > </div>
             let removeBtn = <div className="removeBtn" id={item.id} onClick={this.handleRemoveItem} > </div>
-
+            
             return (
 
                     <tr className="list-item">
                         <th className="header-row" colspan="100">
                             <div className="list-item-text" >Item: {item.id}</div>
+                            <div className="soldBtn" style={{ backgroundColor: item.sold ? "red" : "green" }} />
                             {soldBtn}
                             {removeBtn}
                         </th>
