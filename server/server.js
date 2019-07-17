@@ -55,6 +55,22 @@ http.createServer(function(req, res) {
 
         });
     }
+    else if(req.url.match('/sold-item/change-status') && req.method == "POST") {
+        console.log("Removing sold status");
+        let data = ""
+        req.on('error', (err) => { consol.error(err) })
+        req.on('data', (buffer) => { data += buffer.toString() })
+        req.on('end', () => {
+            try {
+                let parsedInput = data ? JSON.parse(data) : ""
+                queries.removeSoldStatus(parsedInput, (err, result) => { res.end(result) })
+            } 
+            catch(err) {
+                console.error(err.message)
+            }
+
+        });
+    }
     else if(req.url.match('/remove-listing') && req.method == "DELETE") {
         console.log("Adding sold status");
         let data = ""

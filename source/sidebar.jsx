@@ -204,7 +204,7 @@ class Sidebar extends React.Component {
 								</select>
 							</div>
 						</div>
-							<button type="submit">Submit</button>
+							<button className="submitItemBtn" type="submit">Submit</button>
 					</form>
 				</div>
 				

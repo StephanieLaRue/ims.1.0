@@ -31,10 +31,16 @@ class Inventory extends React.Component {
 
     handleSoldClick(e) {
 
-        this.setState({
-            soldStatus: this.state.soldStatus = true
-        });
+        if(e.target.name) {   
+            if(!window.confirm("Would you like to change the sold status of this item?") ) {return }            
+            this.setState({ soldStatus: this.state.soldStatus = false });
+            let sold = { soldStatus: this.state.soldStatus, id: e.target.id }
+            this.changeSoldStatus(sold)
+        }
 
+        if(e.target.name || !window.confirm("Did this item sell?")){ return }
+
+        this.setState({ soldStatus: this.state.soldStatus = true });
         let sold = { soldStatus: this.state.soldStatus, id: e.target.id }
         
         let params = {
@@ -54,6 +60,29 @@ class Inventory extends React.Component {
           })
           .catch(error => console.error('Error GETTING Data:', error))
       }
+
+      changeSoldStatus(sold) {
+        
+        let params = {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(sold)
+          }
+          fetch(`${location.origin}/sold-item/change-status`, params)
+          .then(res => res.json())
+          .then((data) => {
+              console.log(data);
+              
+            this.setState({soldStatus: data.sold}, () => {
+                this.getInventory()
+            })  
+          })
+          .catch(error => console.error('Error GETTING Data:', error))
+      }
+
 
       handleRemoveItem(e) {
 
@@ -127,6 +156,8 @@ class Inventory extends React.Component {
     }
 
     viewInventory(data) {
+
+        
         
         let inventory = data.map((item, ind) => {
 
@@ -134,7 +165,7 @@ class Inventory extends React.Component {
 
                     <tr className="list-item">
                         <th className="header-row" colspan="100">
-                            <button className="soldBtn" id={item.id} onClick={this.handleSoldClick} style={{ backgroundColor: item.sold ? "green" : "" }} >{item.sold ? "Sold" : "Unsold"}</button>
+                            <button className="soldBtn" id={item.id} name={item.sold} onClick={this.handleSoldClick} style={{ backgroundColor: item.sold ? "green" : "" }} >{item.sold ? "Sold" : "Unsold"}</button>
                             <div className="list-item-text" >Item: {item.id}</div>
                             <button className="removeBtn" id={item.id} onClick={this.handleRemoveItem} >X</button>                        </th>
                         

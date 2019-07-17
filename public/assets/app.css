@@ -47,6 +47,14 @@
     margin-bottom: 20px; }
     #full-sidebar #sidebar-dropdowns .dropdown-list {
       margin: 5px auto; }
+  #full-sidebar .submitItemBtn {
+    border: none;
+    width: 90px;
+    height: 30px;
+    border-radius: 2px;
+    background-color: #a60cb4;
+    color: #fff;
+    cursor: pointer; }
 
 #list {
   display: flex;
@@ -75,7 +83,8 @@
         padding: 10px;
         cursor: pointer;
         border-radius: 3px;
-        border: none; }
+        border: none;
+        background-color: #fff; }
       #list .list-item .header-row .removeBtn {
         float: right; }
       #list .list-item .header-row .removeBtn:hover {

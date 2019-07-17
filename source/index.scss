@@ -71,6 +71,16 @@
             margin: 5px auto;
         }
     }
+
+    .submitItemBtn {
+        border: none;
+        width: 90px;
+        height: 30px;
+        border-radius: 2px;
+        background-color: rgb(166, 12, 180);
+        color: #fff;
+        cursor: pointer;
+    }
     
 }
 
@@ -114,6 +124,7 @@
                 cursor: pointer;
                 border-radius: 3px;
                 border:none;
+                background-color: #fff;
             }
 
             .removeBtn {
